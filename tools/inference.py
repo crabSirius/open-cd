@@ -2,6 +2,7 @@ import os
 import os.path as osp
 import shutil
 import time
+import torch
 import cv2
 import numpy as np
 from opencd.apis import OpenCDInferencer
@@ -100,7 +101,15 @@ def main():
         except Exception as e:
             print(f"Checkpoint: {checkpoint}, Input Size: {input_size}, Config: {config_path}, Error: {e}")
             continue
-        inferencer(image_pair_list, show=False, out_dir=output_path)
+        results = inferencer(image_pair_list, show=False, out_dir=output_path, return_datasamples=True)
+        for result, image_pair in zip(results, image_pair_list):
+            seg_logits = result.seg_logits.data
+            score_map = torch.softmax(seg_logits, dim=0)
+            score_map_np = score_map.cpu().numpy()
+            # 比如获取“变化”类（类别1）的分数图
+            change_score_map = score_map_np[1]
+            save_img = (change_score_map * 255).astype(np.uint8)
+            cv2.imwrite(osp.join(output_path, osp.basename(image_pair[1]) + '_change_score_map_gray.png'), save_img)
 
         # 将ouput_path 移动 到 output_path 的子目录中
         output_sub_path = osp.join(output_path, osp.basename(config_path))

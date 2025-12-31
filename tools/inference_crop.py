@@ -189,7 +189,7 @@ def main():
                 patch_positions.append((y, x))
             
             # 对 patch 进行推理
-            inferencer(patch_pair_list, show=False, out_dir=temp_dir)
+            results = inferencer(image_pair_list, show=False, out_dir=output_path, return_datasamples=True)
             
             # 读取所有 patch 的推理结果
             patch_results = []
