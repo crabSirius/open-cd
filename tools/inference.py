@@ -30,6 +30,9 @@ def get_all_checkpoints(checkpoints_dir='checkpoints'):
     checkpoints = []
     for file in os.listdir(checkpoints_dir):
         if file.endswith('.pth'):
+            if 'ban' not in file:
+                continue
+
             checkpoints.append(osp.join(checkpoints_dir, file))
     
     return sorted(checkpoints)
@@ -78,6 +81,8 @@ def main():
         ['datas/1_2.png', 'datas/1_1.png'],
         ['datas/2_1.png', 'datas/2_2.png'],
         ['datas/2_2.png', 'datas/2_1.png'],
+        ['datas/3_1_resize.jpg', 'datas/3_2.jpg'],
+        ['datas/3_2.jpg', 'datas/3_1_resize.jpg'],
     ]
     output_path = 'output'
        
