@@ -46,11 +46,12 @@ def main():
         ['datas/2_1.png', 'datas/2_2.png'],
         ['datas/2_2.png', 'datas/2_1.png'],
     ]
-    output_path = 'output'
+    output_path = 'output_resize'
        
     checkpoints = get_all_checkpoints()
     for checkpoint in checkpoints:
-        input_size = get_input_size(checkpoint)
+        # input_size = get_input_size(checkpoint)
+        input_size = 1024
         config_path = get_config_from_checkpoint(checkpoint)
         if config_path:
             print(f"Checkpoint: {checkpoint}, Input Size: {input_size}, Config: {config_path}")

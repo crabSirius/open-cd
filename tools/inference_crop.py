@@ -133,12 +133,15 @@ def main():
         ['datas/1_2.png', 'datas/1_1.png'],
         ['datas/2_1.png', 'datas/2_2.png'],
         ['datas/2_2.png', 'datas/2_1.png'],
+        ['datas/3_1_resize.jpg', 'datas/3_2.jpg'],
+        ['datas/3_2.jpg', 'datas/3_1_resize.jpg'],
     ]
     output_path = 'output_crop'
        
     checkpoints = get_all_checkpoints()
     for checkpoint in checkpoints:
-        input_size = get_input_size(checkpoint)
+        # input_size = get_input_size(checkpoint)
+        input_size = 1024
         config_path = get_config_from_checkpoint(checkpoint)
         if config_path:
             print(f"Checkpoint: {checkpoint}, Input Size: {input_size}, Config: {config_path}")
@@ -234,8 +237,8 @@ def main():
             cv2.imwrite(osp.join(output_sub_path, result_name), result)
         
         # 清理临时目录
-        if osp.exists(temp_dir):
-            shutil.rmtree(temp_dir)
+        # if osp.exists(temp_dir):
+        #     shutil.rmtree(temp_dir)
 
 if __name__ == '__main__':
     main()
